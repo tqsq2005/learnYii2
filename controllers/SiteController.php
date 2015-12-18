@@ -211,7 +211,6 @@ class SiteController extends Controller
         $rs = $query->all();
         VarDumper::dump($sql);
         VarDumper::dump($rs);
-        //VarDumper::dump();
 
         echo "</pre>";
 
