@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PopulacMapUser;
+use app\models\PopulacMapuser;
 
 /**
- * MapUserSearch represents the model behind the search form about `app\models\PopulacMapUser`.
+ * MapuserSearch represents the model behind the search form about `app\models\PopulacMapuser`.
  */
-class MapUserSearch extends PopulacMapUser
+class MapuserSearch extends PopulacMapuser
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class MapUserSearch extends PopulacMapUser
     public function rules()
     {
         return [
-            [['mapuser', 'pass', 'upmapuser', 'nickname', 'auth_key', 'access_token', 'email', 'tel'], 'safe'],
-            [['rights', 'id', 'created_time', 'updated_time', 'status'], 'integer'],
+            [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token', 'created_time', 'updated_time'], 'safe'],
+            [['rights', 'id', 'status'], 'integer'],
         ];
     }
 
@@ -41,7 +41,7 @@ class MapUserSearch extends PopulacMapUser
      */
     public function search($params)
     {
-        $query = PopulacMapUser::find();
+        $query = PopulacMapuser::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,19 +58,19 @@ class MapUserSearch extends PopulacMapUser
         $query->andFilterWhere([
             'rights' => $this->rights,
             'id' => $this->id,
+            'status' => $this->status,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
-            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'mapuser', $this->mapuser])
             ->andFilterWhere(['like', 'pass', $this->pass])
             ->andFilterWhere(['like', 'upmapuser', $this->upmapuser])
             ->andFilterWhere(['like', 'nickname', $this->nickname])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'access_token', $this->access_token])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'tel', $this->tel]);
+            ->andFilterWhere(['like', 'tel', $this->tel])
+            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
+            ->andFilterWhere(['like', 'access_token', $this->access_token]);
 
         return $dataProvider;
     }

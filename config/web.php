@@ -43,7 +43,7 @@ $config = [
 //    ],
     //该属性指定未配置的请求的响应 路由 规则，路由规则可能包含模块ID，控制器ID，动作ID
     //'defaultRoute' => 'map-user/index',
-    'defaultRoute' => 'map-user',
+    'defaultRoute' => 'mapuser',
     //事件
     /*
     'on beforeRequest' => function($event) {

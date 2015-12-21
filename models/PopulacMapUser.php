@@ -7,7 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%map_user}}".
+ * This is the model class for table "{{%mapuser}}".
  *
  * @property string $mapuser
  * @property string $pass
@@ -23,7 +23,7 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $tel
  */
-class PopulacMapUser extends \yii\db\ActiveRecord
+class PopulacMapuser extends \yii\db\ActiveRecord
 {
     //状态常量
     const STATUS_NORMAL = 1; //正常
@@ -58,7 +58,7 @@ class PopulacMapUser extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%map_user}}';
+        return '{{%mapuser}}';
     }
 
     /**
@@ -67,9 +67,10 @@ class PopulacMapUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mapuser', 'pass', 'rights', 'verifyPass', 'upmapuser', 'auth_key', 'access_token', 'created_time', 'updated_time', 'email', 'tel', 'nickname'], 'required'],
+            [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token', 'created_time', 'updated_time'], 'required'],
             [['rights', 'status'], 'integer'],
-            [['mapuser', 'pass', 'upmapuser', 'auth_key', 'access_token', 'email'], 'string', 'max' => 50],
+            [['created_time', 'updated_time'], 'safe'],
+            [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token'], 'string', 'max' => 50],
             [['tel'], 'match','pattern'=>'/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/','message'=>'请输入正确的{attribute}.'],
             //限制用户最小长度和最大长度
             [['mapuser', 'nickname'], 'string', 'max'=>20, 'min'=>2, 'tooLong'=>'{attribute}请输入长度为2-20个字符', 'tooShort'=>'{attribute}请输入长度为2-20个字符'],
@@ -101,20 +102,21 @@ class PopulacMapUser extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'mapuser' => Yii::t('app', '用户名'),
-            'nickname' => Yii::t('app', '昵称'),
+            'mapuser' => Yii::t('app', '登录账号'),
             'pass' => Yii::t('app', '登录密码'),
-            'verifyPass' => Yii::t('app', '确认密码'),
             'rights' => Yii::t('app', '权限级别'),
-            'upmapuser' => Yii::t('app', '登录名数字编码'),
+            'upmapuser' => Yii::t('app', '数字ID'),
             'id' => Yii::t('app', '自增ID'),
+            'nickname' => Yii::t('app', '昵称'),
+            'email' => Yii::t('app', '联系邮箱'),
+            'tel' => Yii::t('app', '手机号码'),
+            'status' => Yii::t('app', '账号状态'),
             'auth_key' => Yii::t('app', 'auth_key'),
             'access_token' => Yii::t('app', 'access_token'),
             'created_time' => Yii::t('app', '创建时间'),
             'updated_time' => Yii::t('app', '更新时间'),
-            'status' => Yii::t('app', '用户状态'),
-            'email' => Yii::t('app', '联系email'),
-            'tel' => Yii::t('app', '联系手机'),
+            //不在populac_mapUser表中的信息段
+            'verifyPass' => Yii::t('app', '确认密码'),
         ];
     }
 

@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\PopulacMapUser;
-use app\models\MapUserSearch;
+use app\models\PopulacMapuser;
+use app\models\MapuserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MapUserController implements the CRUD actions for PopulacMapUser model.
+ * MapuserController implements the CRUD actions for PopulacMapuser model.
  */
-class MapUserController extends Controller
+class MapuserController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class MapUserController extends Controller
     }
 
     /**
-     * Lists all PopulacMapUser models.
+     * Lists all PopulacMapuser models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MapUserSearch();
+        $searchModel = new MapuserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +42,7 @@ class MapUserController extends Controller
     }
 
     /**
-     * Displays a single PopulacMapUser model.
+     * Displays a single PopulacMapuser model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +54,13 @@ class MapUserController extends Controller
     }
 
     /**
-     * Creates a new PopulacMapUser model.
+     * Creates a new PopulacMapuser model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PopulacMapUser();
+        $model = new PopulacMapuser();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +72,7 @@ class MapUserController extends Controller
     }
 
     /**
-     * Updates an existing PopulacMapUser model.
+     * Updates an existing PopulacMapuser model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +91,7 @@ class MapUserController extends Controller
     }
 
     /**
-     * Deletes an existing PopulacMapUser model.
+     * Deletes an existing PopulacMapuser model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,23 +104,18 @@ class MapUserController extends Controller
     }
 
     /**
-     * Finds the PopulacMapUser model based on its primary key value.
+     * Finds the PopulacMapuser model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PopulacMapUser the loaded model
+     * @return PopulacMapuser the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PopulacMapUser::findOne($id)) !== null) {
+        if (($model = PopulacMapuser::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionTest()
-    {
-
     }
 }
