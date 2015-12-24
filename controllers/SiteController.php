@@ -8,6 +8,7 @@ use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
 use yii\log\DbTarget;
+use yii\validators\DateValidator;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -56,6 +57,10 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'minLength' => 2,//验证码最小长度
+                'maxLength' => 4,//验证码最大长度
+                'fontFile' => '@yii/captcha/BOTTF.TTF',//验证码字体库
+                'offset' => 2,//验证码字符间距
             ],
         ];
     }
@@ -108,109 +113,18 @@ class SiteController extends Controller
     public function actionTest()
     {
         echo "<pre>";
-        echo __DIR__ . PHP_EOL;
-        echo dirname(__DIR__) . PHP_EOL;
-        echo realpath(dirname(__DIR__)) . PHP_EOL;
-        echo __FILE__ . PHP_EOL;
-        echo realpath(__FILE__) . PHP_EOL;
-        echo dirname(__FILE__) . PHP_EOL;
-        echo '@app' . PHP_EOL;
-        echo Yii::getAlias('@app') . PHP_EOL;
-        echo \yii::getAlias('@app') . PHP_EOL;
-        echo Yii::getAlias('@selfMail') .PHP_EOL;
-        echo Yii::$app->params['i_print_pagenum'] . PHP_EOL;
-        echo Yii::$app->layoutPath . PHP_EOL;
-        Func::print_br(time());
-        $microtime1 = microtime(true);
-        Func::print_br($microtime1);
-        usleep(1000000);
-        Func::print_br(microtime());
-        Func::print_br(microtime(true));
-        Func::print_br(microtime(true) - $microtime1);
-        $url = Url::to();
-        Func::print_br($url);
-        $url = Url::to(['site/about']);
-        Func::print_br($url);
-        Func::print_br(Url::base());
-        Func::print_br(Url::base(true));
-        Func::print_br(Url::home());
-        Func::print_br(Url::home(true));
-        Func::print_br('1');
-        Func::print_br(Url::current());
-        Func::print_br('2');
-        Func::print_br(Url::canonical());
-        Func::print_br('3');
-        Url::remember();
-        Func::print_br(Url::previous());
-        $request = Yii::$app->request;
-        Func::print_br('-------print_request_info-------');
-        /*Func::print_br($request->userAgent);
-        Func::print_br($request->userHost);
-        Func::print_br($request->userIP);
-        //print_r(Yii::$app->request);
+        //Yii::$app->formatter->dateFormat = "php:Y-m-d";
+        Func::print_br(Yii::$app->formatter->dateFormat);
 
-        $log = Yii::$app->getLog();
-        //VarDumper::dump($log);
-        foreach($log->targets as $target) {
-            if($target instanceof DbTarget) {
-                VarDumper::dump($target);
-            }
+        $validate = new DateValidator();
+        $testVal = '2015.02.28';
+        if($validate->validate($testVal, $error))
+        {
+            echo "$testVal 是有效日期！";
+            echo Yii::$app->formatter->asDatetime(date('Y-m-d'));
+        } else {
+            Func::print_br($error);
         }
-
-        VarDumper::dump(method_exists('app\common\Func', 'test'));
-        VarDumper::dump(method_exists('app\common\Func', 'print_br'));
-        VarDumper::dump(property_exists('app\common\Func', 'str1'));
-        Func::print_br(URL::toRoute(['aboutUs']));
-        Func::print_br(mb_substr(Yii::$app->params['unitname'], 2));
-        Func::print_br(mb_substr('unitname', 2));
-        Func::print_br(Func::subStr(Yii::$app->params['unitname'], 2));
-        Func::print_br(Func::subStr('unitname', 2));
-        Func::print_br(mb_substr(Yii::$app->params['unitname'], 0, 2, 'utf-8'));
-        VarDumper::dump(mb_http_output());
-        VarDumper::dump(mb_http_input());
-        VarDumper::dump(mb_internal_encoding());
-        VarDumper::dump(mb_get_info());*/
-        //$user = new User();
-        //print_r($user);
-        //print_r(Yii::$app->user);
-        //print_r($this);
-        //print_r(Yii::$aliases);
-        //print_r(Yii::$app);
-        //print_r(Yii::$app->request);
-        /*$container = new \yii\di\Container();
-        $container->set('yii\db\Connection');
-        $container->setSingleton('yii\mail\MailInterface', 'yii\swiftmailer\Mailer');
-        $container->setSingleton('yii\db\Connection', [
-            'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-        ]);
-        VarDumper::dump($container);
-        //false
-        VarDumper::dump(is_object('yii\swiftmailer\Mailer'));
-        VarDumper::dump(Yii::$app->getDb());
-        VarDumper::dump(Yii::$app->db);*/
-        $connection = Yii::$app->getDb();
-        /*$column = $connection->quoteColumnName($column);
-        $table = $connection->quoteTableName($table);
-        $sql = "select count($column) from {{%$table}}";*/
-        /*$sql = "select count(1) from `populac_log`";
-        $command = $connection->createCommand($sql);
-        $printSql = $command->sql;
-        VarDumper::dump($printSql);
-        $schema = $connection->getSchema();
-        $tableNames = $schema->getTableNames();
-        VarDumper::dump($tableNames);
-        VarDumper::dump($schema);*/
-        $query = new Query();
-        $para = " 0 or 1=1";
-        //$query->select(['id','level'])->from(['p'=>'populac_log'])->where(['like', 'category', $para]);
-        $query->select(['id','level'])->from(['p'=>'populac_log'])->where('category=:para')->addParams([':para'=>$para])->orderBy(['id'=>SORT_ASC]);
-        $sql = $query->createCommand()->rawSql;
-        $rs = $query->all();
-        VarDumper::dump($sql);
-        VarDumper::dump($rs);
 
         echo "</pre>";
 

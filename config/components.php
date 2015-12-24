@@ -8,6 +8,16 @@
  * 注册多个在其他地方使用的应用组件
  * 通过表达式 \Yii::$app->ComponentID 全局访问
  */
+/*
+ * 'log' => ['class' => 'yii\log\Dispatcher'],                  // 日志组件
+        'view' => ['class' => 'yii\web\View'],                  // 视图组件
+        'formatter' => ['class' => 'yii\i18n\Formatter'],       // 格式组件
+        'i18n' => ['class' => 'yii\i18n\I18N'],                 // 国际化组件
+        'mailer' => ['class' => 'yii\swiftmailer\Mailer'],      // 邮件组件
+        'urlManager' => ['class' => 'yii\web\UrlManager'],      // url管理组件
+        'assetManager' => ['class' => 'yii\web\AssetManager'],  // 前端资源管理组件
+        'security' => ['class' => 'yii\base\Security'],         // 安全组件
+ */
 return [
     'request' => [
         // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -116,5 +126,16 @@ return [
             '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
             '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
         ],
+    ],
+    //格式组件 'formatter' => ['class' => 'yii\i18n\Formatter'],
+    //http://www.yiiframework.com/doc-2.0/yii-i18n-formatter.html#$datetimeFormat-detail
+    //http://www.yiichina.com/doc/guide/2.0/input-validation
+    'formatter' => [
+        'dateFormat' => 'php:Y.m.d',
+        'datetimeFormat' => 'php:Y.m.d H:i:s',
+        'timeFormat' => 'php:H:i:s',
+        'decimalSeparator' => ',',
+        'thousandSeparator' => ' ',
+        //'currencyCode' => 'RMB',
     ],
 ];

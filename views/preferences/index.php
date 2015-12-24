@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\MapuserSearch */
+/* @var $searchModel app\models\PreferencesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', '账号管理');
+$this->title = Yii::t('app', '常用项目配置');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="populac-mapuser-index">
+<div class="populac-preferences-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '新增账号'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '新增项目'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,21 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'mapuser',
-            'pass',
-            'rights',
-            'upmapuser',
-            'id',
-            // 'nickname',
-            // 'email:email',
-            // 'tel',
-            // 'status',
-            // 'auth_key',
-            // 'access_token',
-            // 'created_time',
-            // 'updated_time',
-
+            // 'id',
+            // 'changemark',
+            'classmark',
+            'classmarkcn',
+            'codes',
+            'name1',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

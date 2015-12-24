@@ -17,6 +17,7 @@
 
 namespace app\common\globalFunc;
 
+use app\models\PopulacPreferences;
 use Yii;
 use yii\base\Object;
 
@@ -137,5 +138,19 @@ class Func extends Object
             }
         }
         return true;
+    }
+
+    /**
+     * (string) getPreferencesName1 :
+     * 根据给定的项目分类的英文名称及其参数代码返回参数名称
+     * @static
+     * @param $classmark 项目分类的英文名称
+     * @param $codes 参数代码
+     * @return string 参数名称
+     */
+    public static function getPreferencesName1($classmark, $codes)
+    {
+        $model = new PopulacPreferences();
+        return $model->getName1Text($classmark, $codes);
     }
 }

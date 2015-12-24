@@ -43,7 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                    <?= $form->field($model, 'name') ?>
+                    <?= $form->field($model, 'name')->widget(\yii\jui\DatePicker::className(), [
+                        'options' => [
+                            'class' => 'form-control',
+                            'readonly' => true,
+                            'placeholder' => '请选择日期',
+                        ],
+                    ]) ?>
 
                     <?= $form->field($model, 'email') ?>
 

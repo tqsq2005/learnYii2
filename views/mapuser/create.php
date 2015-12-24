@@ -6,9 +6,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\PopulacMapuser */
 
-$this->title = Yii::t('app', 'Create Populac Mapuser');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Populac Mapusers'), 'url' => ['index']];
+$this->title = Yii::t('app', '新增账号');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', '账号管理'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJs("$('#populacmapuser-mapuser').on('keyup', function() {
+    if($(this).val()) {
+        $('#populacmapuser-nickname').val($(this).val());
+    }
+});");
 ?>
 <div class="populac-mapuser-create">
 

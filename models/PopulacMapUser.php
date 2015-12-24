@@ -23,7 +23,7 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $tel
  */
-class PopulacMapuser extends \yii\db\ActiveRecord
+class PopulacMapuser extends ActiveRecord
 {
     //状态常量
     const STATUS_NORMAL = 1; //正常
@@ -67,9 +67,9 @@ class PopulacMapuser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token', 'created_time', 'updated_time'], 'required'],
+            [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token'], 'required'],
             [['rights', 'status'], 'integer'],
-            [['created_time', 'updated_time'], 'safe'],
+            //[['created_time', 'updated_time'], 'safe'],
             [['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', 'auth_key', 'access_token'], 'string', 'max' => 50],
             [['tel'], 'match','pattern'=>'/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/','message'=>'请输入正确的{attribute}.'],
             //限制用户最小长度和最大长度
@@ -95,6 +95,16 @@ class PopulacMapuser extends \yii\db\ActiveRecord
 
         ];
     }
+
+    /**
+     * (void) scenarios :
+
+    public function scenarios()
+    {
+        $parent = parent::scenarios();
+        $parent['create'] = ['mapuser', 'pass', 'upmapuser', 'nickname', 'email', 'tel', ''];
+
+    }*/
 
     /**
      * @inheritdoc
@@ -165,5 +175,22 @@ class PopulacMapuser extends \yii\db\ActiveRecord
     public function setVerifyPass($verifyPass)
     {
         $this->_verifyPass = $verifyPass;
+    }
+
+    /**
+     * (string) getUpmapuser :
+     * @return string
+     */
+    public function getUpmapuser()
+    {
+        if($this->isNewRecord)
+        {
+            $upmapuser = $this::find()->select('id')->orderBy(['id' => 'desc'])->limit(1)->one();
+            return str_pad($upmapuser->id + 1, 12, '0', STR_PAD_LEFT);
+        } else
+        {
+            return $this->upmapuser;
+        }
+
     }
 }
