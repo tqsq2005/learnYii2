@@ -18,6 +18,7 @@ use app\common\components\ActionTimeFilter;
 use yii\helpers\Url;
 use yii\web\Request;
 use yii\web\Response;
+use dosamigos\qrcode\QrCode;
 
 class SiteController extends Controller
 {
@@ -110,6 +111,11 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function actionQrcode($url = '')
+    {
+        return QrCode::png($url);
+    }
+
     public function actionTest()
     {
         echo "<pre>";
@@ -125,6 +131,11 @@ class SiteController extends Controller
         } else {
             Func::print_br($error);
         }
+        /*$arr  = ['name', 'email'];
+        $arr1 = [['name', 'email'], 'string', 'max'=>123];
+        $arr2 = [['email'], 'email'];
+        $result = compact('name', 'email', [[['name', 'email'], 'string', 'max'=>123], [['email'], 'email']]);
+        VarDumper::dump($result);*/
 
         echo "</pre>";
 
@@ -158,5 +169,20 @@ class SiteController extends Controller
             //if not set, use yii\web\Application::$charset.
             'charset' => 'utf-8',
         ]);
+    }
+
+    public function actionMail()
+    {
+        $mail = \Yii::$app->mailer->compose()
+            ->setTo('1154579648@qq.com')
+            ->setFrom(['tqsq2005@163.com' => 'Yii 中文网'])
+            ->setSubject('邮件发送配置')
+            //->setTextBody('Yii中文网教程真好 www.yii-china.com')   //发布纯文字文本
+            ->setHtmlBody("<br>Yii中文网教程真好！www.yii-china.com")    //发布可以带html标签的文本
+            ->send();
+        if($mail)
+            echo 'success';
+        else
+            echo 'fail';
     }
 }

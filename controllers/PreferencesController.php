@@ -121,7 +121,12 @@ class PreferencesController extends Controller
 
     public function actionTest()
     {
-        $model = new PopulacPreferences();
-        echo $model->getName1Text('sstatus', '1');
+        //$model = new PopulacPreferences();
+        //echo $model->getName1Text('sstatus', '1');
+        header("Content-type: text/html; charset=utf-8");
+        $data  = PopulacPreferences::find()->indexBy('id')->all();
+        echo "<pre>";
+        print_r($data);
+        echo "</pre";
     }
 }

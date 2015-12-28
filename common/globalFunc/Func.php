@@ -32,6 +32,7 @@ class Func extends Object
     private $str1;
     /**
      * (void) print_br : 打印字符串后自动换行
+     * 如输出中文乱码，请先输入 header("Content-type: text/html; charset=utf-8");
      * @static
      * @param $str
      */

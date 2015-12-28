@@ -63,7 +63,19 @@ return [
         // send all mails to a file by default. You have to set
         // 'useFileTransport' to false and configure a transport
         // for the mailer to send real emails.
-        'useFileTransport' => true,
+        'useFileTransport' => false,
+        'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.163.com',           //使用163邮箱
+            'username' => 'tqsq2005@163.com',   //163用户名， 建议和 params.php 中的 adminEmail 一致
+            'password' => 'owybvyotjrnxfvlu',   //163客户端授权密码
+            'port' => '25',
+            'encryption' => 'tls',
+        ],
+        'messageConfig' => [
+            'from' => ['tqsq2005@163.com' => 'Admin'],
+            'charset' => 'UTF-8',
+        ],
     ],
     'log' => [
         'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -136,6 +148,6 @@ return [
         'timeFormat' => 'php:H:i:s',
         'decimalSeparator' => ',',
         'thousandSeparator' => ' ',
-        //'currencyCode' => 'RMB',
+        'currencyCode' => 'CNY',
     ],
 ];

@@ -106,6 +106,7 @@ class PopulacMapuser extends ActiveRecord
 
     }*/
 
+
     /**
      * @inheritdoc
      */
